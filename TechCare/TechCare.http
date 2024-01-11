@@ -1,6 +1,6 @@
 @TechCare_HostAddress = http://localhost:5234
 
-GET {{TechCare_HostAddress}}/weatherforecast/
+GET {{TechCare_HostAddress}}/
 Accept: application/json
 
 ###
