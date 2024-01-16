@@ -461,6 +461,8 @@ Thumbs.db
 ehthumbs.db
 ehthumbs_vista.db
 
+techcare.db
+
 # Dump file
 *.stackdump
 
@@ -482,3 +484,4 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
