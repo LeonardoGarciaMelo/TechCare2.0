@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TechCare.Data;
 using TechCare.Models.Patient;
 
@@ -15,13 +16,18 @@ namespace TechCare.Controller.Patient
         [HttpGet]
         public IList<PatientModel> GetAll()
         {
-            return _context.Patients.ToList();
+            return _context.Patients
+                .Include(patient => patient.Address)
+                .ToList();
         }
 
         [HttpGet("{id}")]
         public IActionResult GetPatientById(long id) 
         {
-            var patient = _context.Patients.FirstOrDefault(patient => patient.Id == id);
+            var patient = _context.Patients
+                .Include(patient => patient.Address)
+                .FirstOrDefault(patient => patient.Id == id);
+
             return (patient == null) ? NotFound() : Ok(patient);
         }
 
