@@ -10,7 +10,7 @@ namespace TechCare.Controller.Patient
     [Route("patients")]
     public class PatientController(PatientContext context, IMapper mapper) : ControllerBase
     {
-        private PatientContext _context = context;
+        private PatientContext _context = context; 
         private IMapper _mapper = mapper;
 
         [HttpGet]
@@ -40,6 +40,23 @@ namespace TechCare.Controller.Patient
             _context.SaveChanges();
 
             return CreatedAtAction(nameof(GetPatientById), new { id = model.Id }, model);
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(long id)
+        {
+            var patient = _context.Patients
+               .Include(patient => patient.Address)
+               .FirstOrDefault(patient => patient.Id == id);
+
+            if (patient == null)
+            {
+                return NotFound();
+            }
+            _context.Remove(patient);
+            _context.SaveChanges();
+
+            return NoContent();
         }
     }
 }
